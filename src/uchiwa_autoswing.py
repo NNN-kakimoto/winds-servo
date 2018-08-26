@@ -62,16 +62,17 @@ def main():
     servo = GPIO.PWM(gp_out, 50)
 
     # 以下、無限ループ
-    while true:
-        discomfort = get_discomfort(i2c, address)
+		try:
+        while true:
+            discomfort = get_discomfort(i2c, address)
 
-        if(discomfort > 75) # 不快指数のしきい値を一度75とする
-            #print('disconfort')
-            move_servo(servo)
+            if(discomfort > 75) # 不快指数のしきい値を一度75とする
+                #print('disconfort')
+                move_servo(servo)
 
-        
-    
-    GPIO.cleanup()
+            time.sleep(5)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 if __name__ == '__main__':
     main()
