@@ -9,7 +9,9 @@ i2c = smbus.SMBus(1)
 address = 0x5c
  
 
-def get_discomfort(i2c, address):
+def get_discomfort():
+    global i2c
+    global address
     # センサsleep解除
     try:
         i2c.write_i2c_block_data(address,0x00,[])
@@ -48,8 +50,8 @@ def move_servo(servo)
 
 # メイン関数
 def main():
-    i2c = smbus.SMBus(1)
-    address = 0x5c
+    #i2c = smbus.SMBus(1)
+    #address = 0x5c
     
     # GPIOのモード設定
     GPIO.setmode(GPIO.BCM)
@@ -64,7 +66,7 @@ def main():
     # 以下、無限ループ
 		try:
         while true:
-            discomfort = get_discomfort(i2c, address)
+            discomfort = get_discomfort()
 
             if(discomfort > 75) # 不快指数のしきい値を一度75とする
                 #print('disconfort')
